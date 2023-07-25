@@ -1,8 +1,8 @@
 package hvalfangst.security.dto
 
 enum class AssignRoleRequest(val roleId: Int) {
-    USER(1),
-    CREATOR(2),
-    EDITOR(3),
-    ADMIN(4)
+    HEROES_READ(1),
+    HEROES_WRITE(2),
+    HEROES_EDIT(3),
+    HEROES_DELETE(4)
 }

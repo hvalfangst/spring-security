@@ -64,7 +64,8 @@ class ApplicationSecurity {
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests {
             it.requestMatchers("/api/users/**").permitAll()
-            it.requestMatchers("/api/jwt/**").hasAnyAuthority("ADMIN")
+            it.requestMatchers("/api/heroes/create").hasAnyAuthority("HEROES_WRITE")
+            it.requestMatchers("/api/heroes/list/**").hasAnyAuthority("HEROES_READ")
             it.anyRequest().authenticated()
         }
         http.formLogin { it.disable() }
