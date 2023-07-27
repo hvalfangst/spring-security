@@ -31,7 +31,7 @@ class JwtUtil(@Value("\${jwt.secret}") private val secret: String) {
         val signer = MACSigner(secret)
         signedJWT.sign(signer)
 
-        logger.info("\n - - - - [GENERATED TOKEN] - - - - \n")
+        logger.info("- - - - [GENERATED TOKEN] - - - -")
         return signedJWT.serialize()
     }
 
@@ -41,7 +41,7 @@ class JwtUtil(@Value("\${jwt.secret}") private val secret: String) {
             return signedJWT.jwtClaimsSet.subject
         } catch (e: Exception) {
             e.printStackTrace()
-            logger.error("\n- - - - [MALFORMED TOKEN] - - - - \n")
+            logger.error("- - - - [MALFORMED TOKEN] - - - -")
         }
         return null
     }
@@ -57,7 +57,7 @@ class JwtUtil(@Value("\${jwt.secret}") private val secret: String) {
             val verifier = MACVerifier(secret)
             signedJWT.verify(verifier)
         } catch (e: Exception) {
-            logger.error("\n- - - - [INVALID TOKEN SIGNATURE] - - - - \n")
+            logger.error("- - - - [INVALID TOKEN SIGNATURE] - - - -")
             false
         }
     }
@@ -69,7 +69,7 @@ class JwtUtil(@Value("\${jwt.secret}") private val secret: String) {
             val currentTime = Date().time
             expirationTime < currentTime
         } catch (e: Exception) {
-            logger.error("\n- - - - [EXPIRED TOKEN] - - - - \n")
+            logger.error("-  - - - [EXPIRED TOKEN] - - - -")
             true
         }
     }

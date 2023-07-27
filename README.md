@@ -5,29 +5,28 @@
 
 * x86-64
 * JDK 17
+* Keytool
 * Linux
 * Docker
 * Kubernetes
 
 
-## Setup
+## Startup
 
-The script "up" runs our docker-compose file, which creates a database container. See folder "db" 
+The script "up" starts the application by executing the following:
 ```
-λ sh up.sh  
-```
-
-
-## Running
-
-One may start the application by utilizing the maven plugin spring-boot as such:
-```
-λ mvn spring-boot:run
+1. docker-compose -f db/docker-compose.yml up -d
+2. mvn clean install
+3. mvn spring-boot:run
 ```
 
-## Destroying resources
 
-The shell script "down.sh" runs docker-compose down
+## Shutdown
+
+The script "down" wipes the database executing the following:
+```
+1. docker-compose -f db/docker-compose.yml down
+```
 
 
 ## HTTP Endpoints
@@ -44,17 +43,47 @@ The endpoint "api/heroes/list/{USER_ID}" requires the role "HEROES_READ"
 
 ### Users
 
-POST http://localhost:8080/api/users/create -> |CREATE USER|
+POST http://localhost:8080/api/users/create 
 
-POST http://localhost:8080/api/users/{USER_ID}/roles -> |ASSIGN ROLE TO USER|
+```json
+{
+  "fullname": "Glossy",
+  "email": "glossy@glosstradamus.com",
+  "password": "yellau"
+}
+```
 
-GET  http://localhost:8080/api/users/{USER_ID}/roles -> |LIST ROLES FOR USER|
 
-POST http://localhost:8080/api/users/login -> |GENERATES JWT|
+POST http://localhost:8080/api/users/{USER_ID}/roles
+
+GET  http://localhost:8080/api/users/{USER_ID}/roles 
+
+POST http://localhost:8080/api/users/login 
+
+```json
+{
+  "email": "glossy@glosstradamus.com",
+  "password": "yellau"
+}
+```
 
 
 ### Heroes
-POST http://localhost:8080/api/heroes/create -> |CREATE HERO|
+POST http://localhost:8080/api/heroes/create 
 
-GET http://localhost:8080/api/heroes/list/{USER_ID} -> |LIST HEROES FOR USER|
+```json
+{
+  "userId": 1,
+  "class": "Wizard",
+  "level": 10,
+  "hitPoints": 200,
+  "attack": 10,
+  "damage": 5,
+  "ac": 12,
+  "name": "Ernst the Wizard"
+}
+```
+
+
+GET http://localhost:8080/api/heroes/list/{USER_ID} 
 

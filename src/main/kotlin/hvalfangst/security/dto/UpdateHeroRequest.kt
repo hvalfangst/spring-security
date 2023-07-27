@@ -2,7 +2,7 @@ package hvalfangst.security.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class CreateHeroRequest(
+data class UpdateHeroRequest(
     @JsonProperty("userId") val userId: Int,
     @JsonProperty("name") val name: String,
     @JsonProperty("class") val classType: String,

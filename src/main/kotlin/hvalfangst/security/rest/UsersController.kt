@@ -23,18 +23,18 @@ class UsersController(
 
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
-
     @PostMapping("/api/users/create")
     fun createUser(@RequestBody userRequest: CreateUserRequest): ResponseEntity<String> {
-        userService.createUser(userRequest)
-        return ResponseEntity.ok("User created successfully.")
+        val userId: Int? = userService.createUser(userRequest)
+        logger.info("- - - - User with ID $userId has been created - - - -")
+        return ResponseEntity.ok("User with ID $userId has been created")
     }
 
     @PostMapping("/api/users/{userId}/roles")
-    fun assignRoleToUser(@PathVariable userId: Int, @RequestParam request: AssignRoleRequest): ResponseEntity<String> {
-        userService.assignRoleToUser(userId, request.roleId)
-        logger.info("\n - - - - Role '$request' assigned to user with ID $userId.- - - - \n\n")
-        return ResponseEntity.ok("Role '$request' assigned to user with ID $userId.")
+    fun assignRoleToUser(@PathVariable userId: Int, @RequestParam role: AssignRoleRequest): ResponseEntity<String> {
+        userService.assignRoleToUser(userId, role.roleId)
+        logger.info("- - - - User with ID $userId has been assigned the role $role - - - -")
+        return ResponseEntity.ok("User with id $userId has been assigned the role $role")
     }
 
     @GetMapping("/api/users/{userId}/roles")
@@ -62,4 +62,5 @@ class UsersController(
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).build<Any>()
         }
     }
+
 }

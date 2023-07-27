@@ -15,14 +15,15 @@ import org.springframework.stereotype.Service
 @Service
 class UserService {
 
-    fun createUser(request: CreateUserRequest) {
+    fun createUser(request: CreateUserRequest): Int? {
         return transaction {
-            Users.insert {
+            val insertedUser = Users.insert {
                 it[email] = request.email
                 it[fullName] = request.fullName
                 it[password] = BCryptHasher.encodePassword(request.password)
                 it[enabled] = true
             }
+            insertedUser[Users.id]
         }
     }
 
